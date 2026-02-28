@@ -1,21 +1,54 @@
-<!-- Script iklan tetap di halaman -->
-<script async src="https://js.wpadmngr.com/static/adManager.js"
-data-admpid="428714"></script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Player - Klik untuk Putar</title>
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.video-wrapper{
+  width:100%;
+  max-width:900px;
+}
+video{
+  width:100%;
+  display:block;
+}
+</style>
+</head>
+<body>
 
-<video id="player" controls playsinline>
-  <source src="https://cdn.videy.co/VYOSfCwz1.mp4" type="video/mp4">
+<div class="video-wrapper">
+<video
+ id="myVideo"
+ src="https://cdn.videy.co/n2i3MQQt1.mp4"
+ controls
+ playsinline
+ preload="metadata">
 </video>
+</div>
 
+<!-- Dynamic video URL -->
 <script>
-let triggered = false;
-const video = document.getElementById("player");
-
-video.addEventListener("play", function () {
-  if (!triggered) {
-    triggered = true;
-
-    // paksa event klik agar popunder aktif
-    document.body.click();
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const videoURL = params.get("u");
+  if(videoURL){
+    document.getElementById("myVideo").src = videoURL;
   }
-});
+})();
 </script>
+
+<!-- ✅ POPUNDER ONLY ONCE -->
+<script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="428714"></script>
+
+</body>
+  </html>
