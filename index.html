@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title></title>
+<title>Video</title>
 
 <style>
 html,body{
@@ -12,34 +12,39 @@ html,body{
   padding:0;
   background:#000;
   height:100%;
-  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.video-container{
+  width:100%;
+  max-width:720px;
 }
 
 video{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  object-fit:contain;
+  width:100%;
+  height:auto;
   background:#000;
+  display:block;
 }
 </style>
 </head>
 
 <body>
 
-<video
-  id="player"
-  autoplay
-  controls
-  playsinline
-  preload="metadata">
-  <source src="https://cdn.videy.co/n2i3MQQt1.mp4" type="video/mp4">
-</video>
+<div class="video-container">
+  <video
+    id="player"
+    controls
+    playsinline
+    preload="metadata">
+    <source src="https://cdn.videy.co/n2i3MQQt1.mp4" type="video/mp4">
+  </video>
+</div>
 
 <script>
-/* optional: ganti video via ?u=linkmp4 */
+/* optional: ganti video pakai ?u= */
 (function(){
   const params = new URLSearchParams(window.location.search);
   const videoURL = params.get("u");
