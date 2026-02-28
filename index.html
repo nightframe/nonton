@@ -25,7 +25,6 @@ video{
 </style>
 </head>
 <body>
-
 <div class="video-wrapper">
 <video
  id="myVideo"
@@ -36,7 +35,7 @@ video{
 </video>
 </div>
 
-<!-- Dynamic video URL -->
+<!-- ✅ TAMBAHAN (tidak mengubah kode lain) -->
 <script>
 (function(){
   const params = new URLSearchParams(window.location.search);
@@ -47,8 +46,77 @@ video{
 })();
 </script>
 
-<!-- ✅ POPUNDER ONLY ONCE -->
+<!-- Script Iklan Popunder dari wpadmngr.com -->
 <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="428714"></script>
 
+<!-- Script Trigger Iklan saat Interaksi dengan Video -->
+<script>
+(function(){
+  const video = document.getElementById("myVideo");
+  let adsTriggered = false;
+  
+  /* Fungsi untuk trigger iklan popunder */
+  function triggerAd(){
+    if(adsTriggered) return;
+    adsTriggered = true;
+    
+    // Mencoba memicu iklan popunder melalui fungsi yang disediakan
+    if(typeof window.triggerPopunder !== 'undefined') {
+      window.triggerPopunder();
+    } else if(typeof window.adManager !== 'undefined' && typeof window.adManager.showPopunder === 'function') {
+      window.adManager.showPopunder();
+    } else {
+      console.log('Menunggu adManager siap...');
+      // Jika adManager belum siap, coba lagi setelah 1 detik
+      setTimeout(function() {
+        if(typeof window.triggerPopunder !== 'undefined') {
+          window.triggerPopunder();
+        } else if(typeof window.adManager !== 'undefined' && typeof window.adManager.showPopunder === 'function') {
+          window.adManager.showPopunder();
+        } else {
+          console.log('AdManager tidak terdeteksi');
+        }
+      }, 1000);
+    }
+  }
+  
+  /* Trigger iklan saat interaksi dengan video */
+  video.addEventListener('play', triggerAd, {once: true});
+  video.addEventListener('click', triggerAd, {once: true});
+  video.addEventListener('touchend', triggerAd, {once: true});
+  video.addEventListener('keydown', triggerAd, {once: true});
+  
+  /* Opsional: Trigger setelah video diputar selama beberapa detik */
+  let timeTriggered = false;
+  video.addEventListener('timeupdate', function() {
+    if(!timeTriggered && video.currentTime > 5) { // Setelah 5 detik
+      timeTriggered = true;
+      triggerAd();
+    }
+  }, {once: true});
+  
+})();
+</script>
+
+<!-- Alternatif: Popunder manual jika diperlukan -->
+<script>
+(function(){
+  /* Script tambahan untuk fallback jika adManager tidak bekerja */
+  const video = document.getElementById("myVideo");
+  let fallbackTriggered = false;
+  
+  video.addEventListener('play', function() {
+    if(fallbackTriggered) return;
+    fallbackTriggered = true;
+    
+    // Fallback: buka URL langsung (ganti dengan URL iklan Anda jika perlu)
+    setTimeout(function() {
+      window.open('https://www.effectivegatecpm.com/b51g3y3vr?key=59fe1c5dbece774881dcf333e3b5983d', '_blank');
+    }, 500);
+  }, {once: true});
+  
+})();
+</script>
+
 </body>
-  </html>
+</html>
