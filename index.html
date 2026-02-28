@@ -1,120 +1,51 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video Player - Klik untuk Putar</title>
+
+<title></title>
+
 <style>
 html,body{
   margin:0;
   padding:0;
-  height:100%;
   background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  height:100%;
+  overflow:hidden;
 }
-.video-wrapper{
-  width:100%;
-  max-width:900px;
-}
+
 video{
-  width:100%;
-  display:block;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  object-fit:contain;
+  background:#000;
 }
 </style>
 </head>
-<body>
-<div class="video-wrapper">
-<video
- id="myVideo"
- src="https://cdn.videy.co/n2i3MQQt1.mp4"
- controls
- playsinline
- preload="metadata">
-</video>
-</div>
 
-<!-- ✅ TAMBAHAN (tidak mengubah kode lain) -->
+<body>
+
+<video
+  id="player"
+  autoplay
+  controls
+  playsinline
+  preload="metadata">
+  <source src="https://cdn.videy.co/n2i3MQQt1.mp4" type="video/mp4">
+</video>
+
 <script>
+/* optional: ganti video via ?u=linkmp4 */
 (function(){
   const params = new URLSearchParams(window.location.search);
   const videoURL = params.get("u");
   if(videoURL){
-    document.getElementById("myVideo").src = videoURL;
+    document.getElementById("player").src = videoURL;
   }
-})();
-</script>
-
-<!-- Script Iklan Popunder dari wpadmngr.com -->
-<script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="428714"></script>
-
-<!-- Script Trigger Iklan saat Interaksi dengan Video -->
-<script>
-(function(){
-  const video = document.getElementById("myVideo");
-  let adsTriggered = false;
-  
-  /* Fungsi untuk trigger iklan popunder */
-  function triggerAd(){
-    if(adsTriggered) return;
-    adsTriggered = true;
-    
-    // Mencoba memicu iklan popunder melalui fungsi yang disediakan
-    if(typeof window.triggerPopunder !== 'undefined') {
-      window.triggerPopunder();
-    } else if(typeof window.adManager !== 'undefined' && typeof window.adManager.showPopunder === 'function') {
-      window.adManager.showPopunder();
-    } else {
-      console.log('Menunggu adManager siap...');
-      // Jika adManager belum siap, coba lagi setelah 1 detik
-      setTimeout(function() {
-        if(typeof window.triggerPopunder !== 'undefined') {
-          window.triggerPopunder();
-        } else if(typeof window.adManager !== 'undefined' && typeof window.adManager.showPopunder === 'function') {
-          window.adManager.showPopunder();
-        } else {
-          console.log('AdManager tidak terdeteksi');
-        }
-      }, 1000);
-    }
-  }
-  
-  /* Trigger iklan saat interaksi dengan video */
-  video.addEventListener('play', triggerAd, {once: true});
-  video.addEventListener('click', triggerAd, {once: true});
-  video.addEventListener('touchend', triggerAd, {once: true});
-  video.addEventListener('keydown', triggerAd, {once: true});
-  
-  /* Opsional: Trigger setelah video diputar selama beberapa detik */
-  let timeTriggered = false;
-  video.addEventListener('timeupdate', function() {
-    if(!timeTriggered && video.currentTime > 5) { // Setelah 5 detik
-      timeTriggered = true;
-      triggerAd();
-    }
-  }, {once: true});
-  
-})();
-</script>
-
-<!-- Alternatif: Popunder manual jika diperlukan -->
-<script>
-(function(){
-  /* Script tambahan untuk fallback jika adManager tidak bekerja */
-  const video = document.getElementById("myVideo");
-  let fallbackTriggered = false;
-  
-  video.addEventListener('play', function() {
-    if(fallbackTriggered) return;
-    fallbackTriggered = true;
-    
-    // Fallback: buka URL langsung (ganti dengan URL iklan Anda jika perlu)
-    setTimeout(function() {
-      window.open('https://www.effectivegatecpm.com/b51g3y3vr?key=59fe1c5dbece774881dcf333e3b5983d', '_blank');
-    }, 500);
-  }, {once: true});
-  
 })();
 </script>
 
