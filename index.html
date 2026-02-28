@@ -1,49 +1,21 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Video</title>
-
-<style>
-html,body{
-  margin:0;
-  padding:0;
-  height:100%;
-  background:#000;
-}
-
-video{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
-}
-</style>
-
-<!-- POPUNDER ADS -->
-<script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="428714"></script>
-
-</head>
-<body>
+<!-- Script iklan tetap di halaman -->
+<script async src="https://js.wpadmngr.com/static/adManager.js"
+data-admpid="428714"></script>
 
 <video id="player" controls playsinline>
   <source src="https://cdn.videy.co/VYOSfCwz1.mp4" type="video/mp4">
 </video>
 
 <script>
-let adTriggered = false;
+let triggered = false;
 const video = document.getElementById("player");
 
-/* Trigger saat user pertama kali play */
 video.addEventListener("play", function () {
-  if (!adTriggered) {
-    adTriggered = true;
-    // script popunder otomatis jalan karena user interaction
+  if (!triggered) {
+    triggered = true;
+
+    // paksa event klik agar popunder aktif
+    document.body.click();
   }
 });
 </script>
-
-</body>
-</html>
