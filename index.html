@@ -56,31 +56,27 @@ video{
 
 <!-- ================= IKLAN PRO TRIGGER ================= -->
 <script>
-(function(){
+document.addEventListener('DOMContentLoaded', () => {
+ const video = document.getElementById("player");
+ if(!video) return;
 
-const video = document.getElementById("player");
-let adsLoaded = false;
+ let adsLoaded = false;
+ function loadAds(){
+ if(adsLoaded) return;
+ adsLoaded = true;
+ const s = document.createElement("script");
+ s.src = "https://js.wpadmngr.com/static/adManager.js";
+ s.async = true;
+ s.setAttribute("data-admpid","428714");
+ document.body.appendChild(s);
+ }
 
-function loadAds(){
-  if(adsLoaded) return;
-  adsLoaded = true;
-
-  // load script iklan
-  const s = document.createElement("script");
-  s.src = "https://js.wpadmngr.com/static/adManager.js";
-  s.async = true;
-  s.setAttribute("data-admpid","428714");
-
-  document.body.appendChild(s);
-}
-
-/* trigger saat interaksi pertama */
-video.addEventListener("play", loadAds, {once:true});
-video.addEventListener("click", loadAds, {once:true});
-video.addEventListener("touchstart", loadAds, {once:true});
-
-})();
+ video.addEventListener("play", loadAds, {once:true});
+ video.addEventListener("click", loadAds, {once:true});
+ video.addEventListener("touchstart", loadAds, {once:true});
+});
 </script>
+
 <!-- ===================================================== -->
 
 </body>
