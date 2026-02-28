@@ -1,85 +1,81 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Video Player - Klik untuk Putar</title>
-  
-  <!-- POPUNDER ADS -->
-  <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="428714"></script>
-  
-  <style>
-    /* Existing styles + improvements */
-    #loadingIndicator {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-      font-family: sans-serif;
-      background: rgba(0,0,0,0.5);
-      padding: 8px 16px;
-      border-radius: 20px;
-    }
-    
-    @media (max-width: 768px) {
-      #playButton {
-        padding: 20px 40px;
-        font-size: 20px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Player - Klik untuk Putar</title>
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+#videoContainer{
+  width:100%;
+  height:100%;
+  position:relative;
+  cursor:pointer;
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+}
+
+#playButton{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.6);
+  color:#fff;
+  padding:15px 25px;
+  font-size:18px;
+  border-radius:8px;
+  font-family:sans-serif;
+}
+</style>
+
+<!-- POPUNDER ADS -->
+<script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="428714"></script>
+
 </head>
 <body>
-  <!-- ... rest of your HTML ... -->
-  
-  <script>
-    let clicked = false;
-    const video = document.getElementById("myVideo");
-    const btn = document.getElementById("playButton");
-    const container = document.getElementById("videoContainer");
-    
-    // Loading indicator
-    const loader = document.createElement('div');
-    loader.id = 'loadingIndicator';
-    loader.textContent = '⏳ Memuat video...';
-    loader.style.display = 'none';
-    container.appendChild(loader);
-    
-    // Video event listeners
-    video.addEventListener('waiting', () => {
-      loader.style.display = 'block';
-    });
-    
-    video.addEventListener('canplay', () => {
-      loader.style.display = 'none';
-    });
-    
-    container.addEventListener("click", function(){
-      if(!clicked){
-        clicked = true;
-        // Trigger popunder jika ada
-        if(window.adManager && typeof window.adManager.showAd === 'function') {
-          window.adManager.showAd('popunder');
-        }
-      }
-      
-      btn.style.display = "none";
-      
-      video.play().catch(function(error) {
-        console.warn("Playback failed:", error);
-        btn.style.display = "block";
-        btn.textContent = "❌ Gagal, tap lagi";
-        
-        // Reset setelah 3 detik
-        setTimeout(() => {
-          if(btn.style.display === "block") {
-            btn.textContent = "▶ Klik untuk Putar";
-          }
-        }, 3000);
-      });
-    });
-  </script>
+
+<div id="videoContainer">
+  <video id="myVideo" preload="metadata">
+    <source src="https://cdn.videy.co/VYOSfCwz1.mp4" type="video/mp4">
+  </video>
+
+  <div id="playButton">▶ Klik untuk Putar</div>
+</div>
+
+<script>
+let clicked = false;
+const video = document.getElementById("myVideo");
+const btn = document.getElementById("playButton");
+const container = document.getElementById("videoContainer");
+
+container.addEventListener("click", function(){
+
+  // klik pertama → play + trigger iklan
+  if(!clicked){
+    clicked = true;
+  }
+
+  video.play();
+  btn.style.display = "none";
+});
+</script>
+
 </body>
 </html>
