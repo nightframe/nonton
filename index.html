@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Video Player - Klik untuk Putar</title>
+  
+  <!-- POPUNDER ADS -->
+  <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="428714"></script>
+  
+  <style>
+    /* Existing styles + improvements */
+    #loadingIndicator {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-family: sans-serif;
+      background: rgba(0,0,0,0.5);
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      #playButton {
+        padding: 20px 40px;
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ... rest of your HTML ... -->
+  
+  <script>
+    let clicked = false;
+    const video = document.getElementById("myVideo");
+    const btn = document.getElementById("playButton");
+    const container = document.getElementById("videoContainer");
+    
+    // Loading indicator
+    const loader = document.createElement('div');
+    loader.id = 'loadingIndicator';
+    loader.textContent = '⏳ Memuat video...';
+    loader.style.display = 'none';
+    container.appendChild(loader);
+    
+    // Video event listeners
+    video.addEventListener('waiting', () => {
+      loader.style.display = 'block';
+    });
+    
+    video.addEventListener('canplay', () => {
+      loader.style.display = 'none';
+    });
+    
+    container.addEventListener("click", function(){
+      if(!clicked){
+        clicked = true;
+        // Trigger popunder jika ada
+        if(window.adManager && typeof window.adManager.showAd === 'function') {
+          window.adManager.showAd('popunder');
+        }
+      }
+      
+      btn.style.display = "none";
+      
+      video.play().catch(function(error) {
+        console.warn("Playback failed:", error);
+        btn.style.display = "block";
+        btn.textContent = "❌ Gagal, tap lagi";
+        
+        // Reset setelah 3 detik
+        setTimeout(() => {
+          if(btn.style.display === "block") {
+            btn.textContent = "▶ Klik untuk Putar";
+          }
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>
